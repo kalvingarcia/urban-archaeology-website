@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import Hero from './assets/components/hero';
-import {Display} from './assets/components/typography';
-import Button from './assets/components/button';
+import Hero from './assets/components/common/hero';
+import {Display} from './assets/components/common/typography';
+import Button from './assets/components/common/button';
 import Featured from './assets/components/featured';
-import Banner from './assets/components/banner';
+import Banner from './assets/components/common/banner';
 import {GET_FEATURED_PRODUCTS} from './api';
 import Construction from './assets/components/construction';
 

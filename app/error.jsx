@@ -3,7 +3,7 @@ import Image from "next/image";
 import {useEffect, useState} from "react";
 import image from './assets/images/backgrounds/custom.png';
 import './assets/styles/pages/error.scss';
-import Button from "./assets/components/button";
+import Button from "./assets/components/common/button";
 
 export default function Error({error, reset}) {
     useEffect(() => {

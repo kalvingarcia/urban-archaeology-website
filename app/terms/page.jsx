@@ -1,5 +1,5 @@
-import Banner from "../assets/components/banner";
-import {Display, Heading, Subheading} from "../assets/components/typography";
+import Banner from "../assets/components/common/banner";
+import {Display, Heading, Subheading} from "../assets/components/common/typography";
 import '../assets/styles/pages/terms.scss'
 
 export default function Terms() {

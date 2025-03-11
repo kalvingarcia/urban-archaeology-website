@@ -1,5 +1,5 @@
-import Banner from "../assets/components/banner";
-import {Display} from "../assets/components/typography";
+import Banner from "../assets/components/common/banner";
+import {Display} from "../assets/components/common/typography";
 import Portfolio, {Piece} from "../assets/components/portfolio";
 import {GET_CUSTOMS} from "../api";
 import {useCallback} from "react";

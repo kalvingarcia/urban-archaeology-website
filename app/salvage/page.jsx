@@ -1,8 +1,8 @@
-import Banner from "../assets/components/banner";
-import {Display} from "../assets/components/typography";
+import Banner from "../assets/components/common/banner";
+import {Display} from "../assets/components/common/typography";
 import QueryHandler from "../assets/components/query-handler";
 import Filters from "../assets/components/filters";
-import Search from "../assets/components/search";
+import Search from "../assets/components/common/search";
 import Listings from "../assets/components/listings";
 import Card from "../assets/components/card";
 import "../assets/styles/pages/catalog.scss";
