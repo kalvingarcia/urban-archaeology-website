@@ -5,7 +5,7 @@ import {useTheme} from "./common/theme";
 import {QueryContext} from "./query-handler";
 import {Title, Heading} from './common/typography';
 import Button from './common/button';
-import Icon from "./icon-comp";
+import Icon from "./common/iconography";
 import useRippleEffect from "../hooks/ripple";
 import "../styles/components/filters.scss";
 import {navigate} from "../auxillary/actions";

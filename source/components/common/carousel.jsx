@@ -2,7 +2,7 @@
 import {useState, useCallback, Children, useEffect} from 'react';
 import {tss} from 'tss-react';
 import Button from './button';
-import Icon from '../icon-comp';
+import Icon from './iconography';
 import useWindowSize from '../../hooks/window';
 
 const paginationStyles = tss.create({

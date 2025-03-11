@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {createPortal} from "react-dom";
 import {keyframes, tss} from "tss-react";
 import {useTheme} from "./theme";
-import Icon from "../icon-comp";
+import Icon from "./iconography";
 
 const SNACKBAR_TIMEOUT = 5000;
 const ANIMATION_TIME = 200;

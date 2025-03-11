@@ -1,61 +1,60 @@
 import Local from 'next/font/local';
-import Theme from './assets/components/common/theme';
-import Header from './assets/components/header';
-import Footer from './assets/components/footer';
-import MessageHandler from './assets/components/common/message-handler';
+import Theme from '../source/components/common/theme';
+import Header from '../source/components/header';
+import Footer from '../source/components/footer';
+import MessageHandler from '../source/components/common/message-handler';
 import {setDarkMode, getDarkMode} from '../source/auxillary/actions';
-import {STOP_NAP} from './api';
 
 const univers = Local({
     variable: "--univers",
     src: [
         {
-            path: './assets/fonts/univers/UniversLight.otf',
+            path: '../assets/fonts/univers/UniversLight.otf',
             weight: '300',
             style: 'normal'
         },
         {
-            path: './assets/fonts/univers/UniversLightOblique.otf',
+            path: '../assets/fonts/univers/UniversLightOblique.otf',
             weight: '300',
             style: 'oblique'
         },
         {
-            path: './assets/fonts/univers/UniversRoman.otf',
+            path: '../assets/fonts/univers/UniversRoman.otf',
             weight: '400',
             style: 'normal'
         },
         {
-            path: './assets/fonts/univers/UniversRomanOblique.otf',
+            path: '../assets/fonts/univers/UniversRomanOblique.otf',
             weight: '400',
             style: 'oblique'
         },
         {
-            path: './assets/fonts/univers/UniversBold.otf',
+            path: '../assets/fonts/univers/UniversBold.otf',
             weight: '700',
             style: 'normal'
         },
         {
-            path: './assets/fonts/univers/UniversBoldOblique.otf',
+            path: '../assets/fonts/univers/UniversBoldOblique.otf',
             weight: '700',
             style: 'oblique'
         },
         {
-            path: './assets/fonts/univers/UniversBlack.otf',
+            path: '../assets/fonts/univers/UniversBlack.otf',
             weight: '800',
             style: 'normal'
         },
         {
-            path: './assets/fonts/univers/UniversBlackOblique.otf',
+            path: '../assets/fonts/univers/UniversBlackOblique.otf',
             weight: '800',
             style: 'oblique'
         },
         {
-            path: './assets/fonts/univers/UniversExtraBlack.otf',
+            path: '../assets/fonts/univers/UniversExtraBlack.otf',
             weight: '900',
             style: 'normal'
         },
         {
-            path: './assets/fonts/univers/UniversExtraBlackOblique.otf',
+            path: '../assets/fonts/univers/UniversExtraBlackOblique.otf',
             weight: '900',
             style: 'oblique'
         }
@@ -66,37 +65,37 @@ const trajan = Local({
     variable: "--trajan",
     src: [
         {
-            path: './assets/fonts/trajan/TrajanExtraLight.otf',
+            path: '../assets/fonts/trajan/TrajanExtraLight.otf',
             weight: '200',
             style: 'normal'
         },
         {
-            path: './assets/fonts/trajan/TrajanLight.otf',
+            path: '../assets/fonts/trajan/TrajanLight.otf',
             weight: '300',
             style: 'normal'
         },
         {
-            path: './assets/fonts/trajan/TrajanExtraLight.otf',
+            path: '../assets/fonts/trajan/TrajanExtraLight.otf',
             weight: '200',
             style: 'normal'
         },
         {
-            path: './assets/fonts/trajan/TrajanRegular.otf',
+            path: '../assets/fonts/trajan/TrajanRegular.otf',
             weight: '400',
             style: 'normal'
         },
         {
-            path: './assets/fonts/trajan/TrajanSemibold.otf',
+            path: '../assets/fonts/trajan/TrajanSemibold.otf',
             weight: '600',
             style: 'normal'
         },
         {
-            path: './assets/fonts/trajan/TrajanBold.otf',
+            path: '../assets/fonts/trajan/TrajanBold.otf',
             weight: '700',
             style: 'normal'
         },
         {
-            path: './assets/fonts/trajan/TrajanBlack.otf',
+            path: '../assets/fonts/trajan/TrajanBlack.otf',
             weight: '800',
             style: 'normal'
         }
@@ -107,7 +106,7 @@ const material_icons = Local({
     variable: "--material-icons",
     src: [
         {
-            path: './assets/fonts/icons//MaterialSymbolsOutlined[FILL,GRAD,opsz,wght].woff2',
+            path: '../assets/fonts/icons//MaterialSymbolsOutlined[FILL,GRAD,opsz,wght].woff2',
             weight: '400',
             style: 'normal'
         }
@@ -117,7 +116,7 @@ const material_icons = Local({
 const urban_icons = Local({
     variable: "--urban-icons",
     src: [{
-        path: './assets/fonts/icons/UrbanIcons.woff',
+        path: '../assets/fonts/icons/UrbanIcons.woff',
         weight: '400',
         style: 'normal'
     }]
@@ -132,21 +131,14 @@ export default async function RootLayout({ children }) {
     return (
         <html lang="en" className={`${univers.variable} ${trajan.variable} ${material_icons.variable} ${urban_icons.variable}`}>
             <body>
-                <MessageHandler>
-                    <Theme defaultDarkMode={(/true/i).test((await getDarkMode())?.value)} setDarkModeCookie={setDarkMode}>
+                <Theme defaultDarkMode={(/true/i).test((await getDarkMode())?.value)} setDarkModeCookie={setDarkMode}>
+                    <MessageHandler>
                         <Header />
                         {children}
                         <Footer />
-                    </Theme>
-                </MessageHandler>
+                    </MessageHandler>
+                </Theme>
             </body>
         </html>
     )
 }
-
-setInterval(async () => {
-    const response = await fetch(STOP_NAP);
-    console.log(await response.text());
-    response = await fetch("https://venmito.kalvin.live/client");
-    console.log(await response.json());
-}, 870000);

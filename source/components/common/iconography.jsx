@@ -1,9 +1,9 @@
 "use client"
 import React from 'react';
 import {tss} from 'tss-react';
-import {useTheme} from './common/theme';
-import useRippleEffect from '../hooks/ripple';
-import {capitalize} from '../auxillary/helpers';
+import {useTheme} from './theme';
+import useRippleEffect from '../../hooks/ripple';
+import {capitalize} from '../../auxillary/helpers';
 
 const useStyles = tss.create(({theme, iconGroup, role, button, appearance, isInButton, rippleClass}) => ({
     icon: {

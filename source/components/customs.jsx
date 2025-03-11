@@ -7,7 +7,7 @@ import {useTheme} from './common/theme';
 import {CardSkeleton} from './card';
 import {Heading} from './common/typography';
 import useRippleEffect from '../hooks/ripple';
-import Icon from './icon-comp';
+import Icon from './common/iconography';
 
 const loadingGradient = keyframes`
     0% {

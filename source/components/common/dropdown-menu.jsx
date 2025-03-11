@@ -2,7 +2,7 @@
 import {useState, useEffect} from 'react';
 import {tss} from 'tss-react';
 import {useTheme} from './theme';
-import Icon from '../icon-comp';
+import Icon from './iconography';
 
 const optionStyles = tss.create(({theme}) => ({
     option: {

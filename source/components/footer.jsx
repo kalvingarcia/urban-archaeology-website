@@ -2,9 +2,10 @@
 import {usePathname} from 'next/navigation';
 import Link from 'next/link';
 import {useState} from 'react';
+import {tss} from 'tss-react';
+import {useTheme} from './common/theme';
 import {Heading, Subheading} from './common/typography';
 import Button from './common/button';
-import '../styles/components/footer.scss';
 import Modal from './common/modal';
 
 /**
@@ -87,6 +88,7 @@ export default function Footer() {
                 <Link className='terms' href="/terms">Terms and conditions apply.</Link>
                 <span className='accredation'>Designed and built by <Link href="https://www.kalvingarcia.com">Kalvin Garcia</Link></span>
             </div>
+
             <Modal open={open} setOpen={setOpen}>
                 <div className='locations-popup'>
                     <Heading>Locations</Heading>
