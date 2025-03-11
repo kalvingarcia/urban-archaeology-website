@@ -3,7 +3,7 @@ import Theme from './assets/components/common/theme';
 import Header from './assets/components/header';
 import Footer from './assets/components/footer';
 import MessageHandler from './assets/components/common/message-handler';
-import {setDarkMode, getDarkMode} from './auxillary/actions';
+import {setDarkMode, getDarkMode} from '../source/auxillary/actions';
 import {STOP_NAP} from './api';
 
 const univers = Local({

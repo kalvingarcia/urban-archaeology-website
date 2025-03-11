@@ -1,5 +1,5 @@
 import Database from "../../database";
-import {bton} from "../../../auxillary/helpers";
+import {bton} from "../../../../source/auxillary/helpers";
 
 export async function GET(request) {
     const searchParameters = request.nextUrl.searchParams;
