@@ -1,12 +1,9 @@
-import Banner from "../assets/components/common/banner";
-import {Display} from "../assets/components/common/typography";
-import QueryHandler from "../assets/components/query-handler";
-import Filters from "../assets/components/filters";
-import Search from "../assets/components/common/search";
-import Featured from "../assets/components/featured";
-import Listings from "../assets/components/listings";
-import Card from "../assets/components/card";
-import "../assets/styles/pages/catalog.scss";
+import Banner from "@/source/components/common/banner";
+import {Display} from "@/source/components/common/typography";
+import ListingHandler from "@/source/components/listing-handler";
+import Featured from "@/source/components/featured";
+import Listings from "@/source/components/listings";
+import Card from "@/source/components/card";
 import {GET_FEATURED_PRODUCTS, GET_PRODUCTS, GET_PRODUCT_TAGS} from '../api';
 
 export default async function Catalog({searchParams}) {
@@ -23,30 +20,24 @@ export default async function Catalog({searchParams}) {
             <Banner src="catalog.jpg">
                 <Display size="medium">Catalog</Display>
             </Banner>
-            <QueryHandler>
-                <section className="catalog">
-                    <Filters filters={filters} />
-                    <div className="listings">
-                        <Search />
-                        {featured.length === 0? "" : <Featured featured={featured} changeWidth={1600} />}
-                        <Listings>
-                            {listings.map(product => (
-                                <Card
-                                    key={`${product.id}-${product.extension}`}
-                                    type="list"
-                                    from="products"
-                                    id={product.id}
-                                    extension={product.extension}
-                                    name={product.name}
-                                    subname={product.subname}
-                                    category={product.category}
-                                    price={product.price}
-                                />
-                            ))}
-                        </Listings>
-                    </div>
-                </section>
-            </QueryHandler>
+            <ListingHandler filters={filters}>
+                {featured.length === 0? "" : <Featured featured={featured} changeWidth={1600} />}
+                <Listings>
+                    {listings.map(product => (
+                        <Card
+                            key={`${product.id}-${product.extension}`}
+                            type="list"
+                            from="products"
+                            id={product.id}
+                            extension={product.extension}
+                            name={product.name}
+                            subname={product.subname}
+                            category={product.category}
+                            price={product.price}
+                        />
+                    ))}
+                </Listings>
+            </ListingHandler>
         </main>
     )
 }

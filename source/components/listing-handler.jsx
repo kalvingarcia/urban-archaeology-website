@@ -1,11 +1,34 @@
 "use client"
 import {useRouter, usePathname, useSearchParams} from 'next/navigation';
 import {createContext, useCallback, useState, useEffect} from "react";
+import {tss} from 'tss-react';
+import {useTheme} from './common/theme';
+import Filters from "./filters";
+import Search from "./search";
 import {ntob, bton} from '../auxillary/helpers';
 
 export const QueryContext = createContext();
 
-export default function QueryHandler({children}) {
+const useStyles = tss.create(({theme}) => ({
+    container: {
+        maxWidth: "1500px",
+        margin: "auto",
+        width: "100%",
+        display: "flex",
+        gap: "40px",
+        padding: "40px"
+    },
+    listings: {
+        width: "100%",
+        flex: "0 1 100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "40px"
+    }
+}));
+
+export default function ListingHandler({filters, children}) {
     const searchParameters = useSearchParams();
     const [queryParameters, setQueryParameter] = useState(() => {
         var {search, filters} = {search: "", filters: {}};
@@ -65,9 +88,17 @@ export default function QueryHandler({children}) {
         setQueryParameter({...queryParameters, filters: filters});
     }, [queryParameters]);
 
+    const theme = useTheme();
+    const {classes} = useStyles({theme});
     return (
         <QueryContext.Provider value={{getSearch, setSearch, hasFilter, addFilter, removeFilter, applyRoute}} >
-            {children}
+            <section className={classes.container}>
+                <Filters filters={filters} />
+                <div className={classes.listings}>
+                    <Search />
+                    {children}
+                </div>
+            </section>
         </QueryContext.Provider>
     );
 }
