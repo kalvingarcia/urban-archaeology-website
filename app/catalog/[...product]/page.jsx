@@ -1,13 +1,12 @@
 import {notFound, redirect} from 'next/navigation';
 import Image from 'next/image';
-import Spotlight from '../../assets/components/spotlight';
+import Spotlight from '@/source/components/spotlight';
 import ProductData from '@/app/assets/components/product-data';
 import Variations, {Variation} from '@/app/assets/components/variations';
 import Related from '../../assets/components/related';
 import Customs from '@/app/assets/components/customs';
 import Card from '@/app/assets/components/card';
-import '../../assets/styles/pages/product.scss';
-import {GET_PRODUCTS, GET_RELATED_PRODUCTS, GET_RELATED_CUSTOMS} from '../../api';
+import {GET_PRODUCTS, GET_RELATED_PRODUCTS, GET_RELATED_CUSTOMS} from '@/app/api';
 
 export async function generateMetadata({params}) {
     const {product: [id, extension, ..._]} = await params;

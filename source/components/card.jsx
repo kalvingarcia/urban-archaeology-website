@@ -179,13 +179,13 @@ export default function Card({type = "normal", from, id, extension, name, subnam
         (async () => {
             setLoading(true);
             const timeout = setTimeout(async () => {
-                setImage((await import("../images/unavailable.jpg")).default);
+                setImage((await import("@/assets/images/unavailable.jpg")).default);
                 setLoading(false);
             }, 5000);
             if(from === 'salvage')
-                setImage((await import(`../images/${from}/${id}/${extension}/card.jpg`)).default);
+                setImage((await import(`@/assets/images/${from}/${id}/${extension}/card.jpg`)).default);
             else
-                setImage((await import(`../images/${from}/${id}/${extension}/card.jpg`)).default);
+                setImage((await import(`@/assets/images/${from}/${id}/${extension}/card.jpg`)).default);
             clearTimeout(timeout);
             setLoading(false);
             

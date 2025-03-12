@@ -1,3 +1,4 @@
+"use client"
 import {tss} from "tss-react";
 import {useTheme} from "./theme";
 
@@ -25,7 +26,7 @@ const hStyles = tss.create(({theme, type}) => ({
         position: "relative",
         color: theme[type],
         fontSize: type === "title"? "2rem" : type === "subtitle"? "1.75rem" : type === "heading"? "1.5rem" : "1.2rem",
-        fontWeight: bold
+        fontWeight: "bold"
     }
 }));
 

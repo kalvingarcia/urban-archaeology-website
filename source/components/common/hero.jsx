@@ -66,7 +66,7 @@ export default function Hero({src, children}) {
     const [image, setImage] = useState(null);
     useEffect(() => {
         (async () => {
-            setImage((await import(`../../images/backgrounds/${src}`)).default);
+            setImage((await import(`@/assets/images/backgrounds/${src}`)).default);
         })();
     }, [src]);
 
