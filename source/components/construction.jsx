@@ -1,22 +1,16 @@
-import {Title, Subheading} from './common/typography';
-import '../styles/components/construction.scss';
+import {Title} from './common/typography';
 import Button from './common/button';
 
 
 // https://forms.gle/c6KUMZ9wDvTvRyDKA
-export default function Construction() {
+export default function Construction({title, children}) {
     return (
         <div className="construction">
-            <Title>Something New is Under Construction!</Title>
+            <Title>{title}</Title>
             <div className="divider" />
-            <p>
-                Currently our website is in the alpha stages, which means we're still in the process of adding
-                product images, updating product information, and preparing to launch the website in beta for 
-                the public! While we complete this process, please feel free to give us insight on your experience
-                and how we can improve.
-            </p>
+            <p>{children}</p>
             <a href="https://forms.gle/c6KUMZ9wDvTvRyDKA" target='_blank'>
-                <Button>Send Feedback</Button>
+                <Button>See Design Concepts</Button>
             </a>
         </div>
     );

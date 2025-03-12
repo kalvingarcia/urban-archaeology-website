@@ -1,36 +1,17 @@
-import Banner from "../assets/components/common/banner";
-import {Display} from "../assets/components/common/typography";
-import Portfolio, {Piece} from "../assets/components/portfolio";
-import {GET_CUSTOMS} from "../api";
-import {useCallback} from "react";
-import Construction from "../assets/components/construction";
+import Banner from "@/source/components/common/banner";
+import {Display} from "@/source/components/common/typography";
+import Construction from "@/source/components/construction";
 
-export default async function Gallery({searchParams}) {
-    // let offset = (await searchParams).offset? searchParams.offset : 0;
-    // const customs = await fetch(`${GET_CUSTOMS}?${offset}`).then(response => response.json());
-    // const addNextCustoms = async () => {
-    //     offset += 10;
-    //     customs.concat(await fetch(`${GET_CUSTOMS}?${offset}`).then(response => response.json()));
-    // };
-
+export default async function Gallery({}) {
     return (
         <main>
             <Banner src="gallery.jpg">
                 <Display size="medium">Gallery</Display>
             </Banner>
-            <Construction />
-            {/* <Portfolio>
-                {customs.map(custom => (
-                    <Piece 
-                        key={custom.id}
-                        id={custom.id}
-                        name={custom.name}
-                        description={custom.description}
-                        customer={custom.customer}
-                        product={custom.product}
-                    />
-                ))}
-            </Portfolio> */}
+            <Construction title="Salvage Section Explained">
+                The salvage section of the website would function simillarly
+                to the catalog section.
+            </Construction>
         </main>
     );
 }

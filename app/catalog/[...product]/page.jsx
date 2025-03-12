@@ -1,12 +1,12 @@
 import {notFound, redirect} from 'next/navigation';
 import Image from 'next/image';
 import Spotlight from '@/source/components/spotlight';
-import ProductData from '@/app/assets/components/product-data';
-import Variations, {Variation} from '@/app/assets/components/variations';
-import Related from '../../assets/components/related';
-import Customs from '@/app/assets/components/customs';
-import Card from '@/app/assets/components/card';
-import {GET_PRODUCTS, GET_RELATED_PRODUCTS, GET_RELATED_CUSTOMS} from '@/app/api';
+import ProductData from '@/source/components/product-data';
+import Variations, {Variation} from '@/source/components/variations';
+import Related from '@/source/components/related';
+import Customs from '@/source/components/customs';
+import Card from '@/source/components/card';
+import {GET_PRODUCTS, GET_RELATED_PRODUCTS} from '@/app/api';
 
 export async function generateMetadata({params}) {
     const {product: [id, extension, ..._]} = await params;
@@ -44,14 +44,14 @@ export default async function Product({params}) {
         const image = {
             name: `${count}.jpg`,
             alt: `Product image ${count}`,
-            src: (await import(`../../assets/images/products/${id}/${extension}/${count}.jpg`).catch(() => undefined))?.default
+            src: (await import(`@/assets/images/products/${id}/${extension}/${count}.jpg`).catch(() => undefined))?.default
         };
         if(image.src === undefined)
             break;
         images.push(image);
         count++;
     }
-    const drawing = (await import(`../../assets/images/products/${id}/${extension}/drawing.jpg`).catch(() => undefined))?.default
+    const drawing = (await import(`@/assets/images/products/${id}/${extension}/drawing.jpg`).catch(() => undefined))?.default
 
     const product = (await fetch(`${GET_PRODUCTS}/${id}`, {cache: 'no-store'}).then(response => {
         if(!response.ok)
@@ -64,7 +64,6 @@ export default async function Product({params}) {
     if(!product)
         throw new Error("An error occured while attempting to get the product data.");
     const related = await fetch(`${GET_RELATED_PRODUCTS}?id=${id}&extension=${extension}`, {cache: 'no-store'}).then(response => response.json());
-    const customs = await fetch(`${GET_RELATED_CUSTOMS}?id=${id}&extension=${extension}`).then(response => response.json());
     return (
         <main className='product'>
             <section className='info'>
@@ -113,19 +112,7 @@ export default async function Product({params}) {
                 :
                 ""
             }
-            <Customs>
-                {customs.map(item => (
-                    <Custom
-                        key={item.id}
-                        id={item.id}
-                        productID={item.product_id}
-                        extension={item.variation_extension}
-                        name={item.name}
-                        customer={item.subname}
-                        category={product.category}
-                    />
-                ))}
-            </Customs>
+            <Customs />
         </main>
     );
 }

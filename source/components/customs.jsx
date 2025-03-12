@@ -150,7 +150,7 @@ export function Custom({id, productID, extension, name, customer, category}) {
     useEffect(() => {
         (async () => {
             setLoading(true);
-            setImage(await import(`../images/${from}/${id}/card.jpg`));
+            setImage(await import(`@/assets/images/${from}/${id}/card.jpg`));
             setLoading(false);
         })();
     }, [])
@@ -252,7 +252,7 @@ function GalleryLink() {
     useEffect(() => {
         (async () => {
             setLoading(true);
-            setImage(await import(`../images/backgrounds/custom.png`));
+            setImage(await import(`@/assets/images/backgrounds/custom.png`));
             setLoading(false);
         })();
     }, [])
