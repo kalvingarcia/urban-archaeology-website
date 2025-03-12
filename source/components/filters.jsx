@@ -1,70 +1,56 @@
 "use client"
 import {useState, useContext, useEffect} from "react";
-import {tss} from "tss-react";
+import {tss, useStyles} from "tss-react";
 import {useTheme} from "./common/theme";
-import {QueryContext} from "./query-handler";
+import {QueryContext} from "./listing-handler";
 import {Title, Heading} from './common/typography';
 import Button from './common/button';
 import Icon from "./common/iconography";
 import useRippleEffect from "../hooks/ripple";
-import "../styles/components/filters.scss";
 import {navigate} from "../auxillary/actions";
 
-export function FilterListSkeleton() {
-    return (
-        <div className="filter-list skeleton">
-            <div className="filter-group">
-                <div className="name ">
-                    <div className="label" />
-                    <i className="material-icons">arrow_drop_down</i>
-                </div>
-                <div className="drawer open">
-                    <div className="filter">
-                        <div className="switch" />
-                        <div className="label" />
-                    </div>
-                    <div className="filter">
-                        <div className="switch" />
-                        <div className="label" />
-                    </div>
-                </div>
-            </div>
-            <div className="filter-group">
-                <div className="name ">
-                    <div className="label" />
-                    <i className="material-icons">arrow_drop_down</i>
-                </div>
-            </div>
-            <div className="filter-group">
-                <div className="name ">
-                    <div className="label" />
-                    <i className="material-icons">arrow_drop_down</i>
-                </div>
-            </div>
-            <div className="filter-group">
-                <div className="name ">
-                    <div className="label" />
-                    <i className="material-icons">arrow_drop_down</i>
-                </div>
-            </div>
-            <div className="filter-group">
-                <div className="name ">
-                    <div className="label" />
-                    <i className="material-icons">arrow_drop_down</i>
-                </div>
-            </div>
-            <div className="filter-group">
-                <div className="name ">
-                    <div className="label" />
-                    <i className="material-icons">arrow_drop_down</i>
-                </div>
-            </div>
-        </div>
-    );
-}
+const chipStyles = tss.create(({theme, on}) => ({
+    chip: {
+        position: "relative",
+        minHeight: "fit-content",
+        minWidth: "fit-content",
+        maxHeight: "fit-content",
+        maxWidth: "fit-content",
+        display: "flex",
+        alignItems: "center",
+        gap: "2px",
+        padding: "10px 20px",
+        overflow: "hidden",
+        clipPath: "inset(0 0 0 0 round 2000px)",
+        backgroundColor: on? theme.onPrimary : "transparent",
+        borderRadius: "2000px",
+        border: on? "none" : `1pt solid ${theme.onPrimary + "7F"}`,
+        color: on? theme.primary : theme.onPrimary + "7F",
+        transition: "none",
+
+        "&::after": {
+            content: "''",
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            opacity: 0,
+            backgroundColor: on? theme.primary : theme.onPrimary,
+            transition: "opacity 300ms ease-in-out"
+        },
+        "&:hover::after": {
+            opacity: 0.2
+        }
+    },
+    icon: {
+        fontSize: "30px"
+    },
+    label: {
+        fontSize: "0.8rem"
+    }
+}));
 
 function Chip({id, name, category}) {
-    const [rippleExpand, rippleFade] = useRippleEffect();
     const {hasFilter, addFilter, removeFilter} = useContext(QueryContext);
     const [on, setOn] = useState(hasFilter(category,id));
     useEffect(() => {
@@ -74,24 +60,66 @@ function Chip({id, name, category}) {
             removeFilter(category, id);
     }, [on]);
 
+    const theme = useTheme();
+    const {cx, classes} = chipStyles({theme, on});
     return (
-        <button className={["chip", on? "on" : ""].join(" ")} onMouseDown={rippleExpand} onMouseUp={rippleFade} onClick={() => setOn(!on)}>
-            <i className={["urban-icons", "icon"].join(" ")}>{name.toLowerCase()}</i>
-            <span className="label">{name}</span>
-        </button>
+        <span className={classes.chip} onClick={() => setOn(!on)}>
+            <i className={cx("urban-icons", classes.icon)}>{name.toLowerCase()}</i>
+            <span className={classes.label}>{name}</span>
+        </span>
     );
 }
 
+const chipGroupStyles = tss.create(({theme}) => ({
+    chipGroup: {
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "5px",
+        paddingBottom: "10px"
+    }
+}));
+
 function ChipGroup({children}) {
+    const theme = useTheme();
+    const {classes} = chipGroupStyles({theme});
     return (
-        <div className="chip-group">
+        <div className={classes.chipGroup}>
             {children}
         </div>
     );
 }
 
 const filterStyles = tss.create(({theme}) => ({
+    filter: {
+        display: "flex",
+        alignItems: "center",
+        gap: "10px",
+        padding: "10px 20px"
+    },
+    switch: {
+        position: "relative",
+        width: "60px",
+        height: "34px",
+        backgroundColor: theme.onPrimary,
+        opacity: on? 1 : 0.5,
+        borderRadius: "2000px",
+        transition: "opacity 300ms ease-in-out",
 
+        "& .slider": {
+            position: "absolute",
+            height: "26px",
+            width: "26px",
+            left: "4px",
+            bottom: "4px",
+            borderRadius: "2000px",
+            overflow: "hidden",
+            clipPath: "inset(0 0 0 0 round 2000px)",
+            backgroundColor: theme.background,
+            cursor: "pointer",
+            transform: on? "translateX(25px)" : "none",
+            transition: "transform 300ms ease-in-out"
+        }
+    },
 }));
 
 function Filter({id, name, category}) {
@@ -109,7 +137,7 @@ function Filter({id, name, category}) {
             <div className={["switch", on? "on" : ""].join(" ")} onClick={() => setOn(!on)}>
                 <div className="slider" />
             </div>
-            <span className="label">{name}</span>
+            <span>{name}</span>
         </div>
     );
 }
@@ -301,15 +329,15 @@ export default function Filters({filters}) {
             <section className={classes.filters}>
                 <div className={classes.titleBar}>
                     <Title>Filters</Title>
-                    <Icon className="close" role="primary" appearance="filled" button icon="close" onPress={() => setOpen(false)} />
+                    <Icon className="close" role="primary" appearance="filled" button icon="close" onClick={() => setOpen(false)} />
                 </div>
                 <FilterList filters={filters} />
                 <div className={classes.buttons}>
-                    <Button role="secondary" style="tonal" onPress={() => navigate("/catalog")}>Clear</Button>
-                    <Button role="primary" style="filled" onPress={() => applyRoute() || setOpen(false)}>Filter</Button>
+                    <Button role="secondary" style="tonal" onClick={() => navigate("/catalog")}>Clear</Button>
+                    <Button role="primary" style="filled" onClick={() => applyRoute() || setOpen(false)}>Filter</Button>
                 </div>
             </section>
-            <Icon className={classes.actionButton} role="primary" appearance="filled" button onPress={() => setOpen(true)} icon="manage_search" />
+            <Icon className={classes.actionButton} role="primary" appearance="filled" button onClick={() => setOpen(true)} icon="manage_search" />
         </div>
     );
 }
