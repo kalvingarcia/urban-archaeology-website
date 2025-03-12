@@ -49,17 +49,17 @@ const useStyles = tss.create(({theme, iconGroup, role, button, appearance, isInB
             backgroundColor: appearance === "text" || appearance === "outlined"? theme[`on${capitalize(role)}`] : theme[appearance === "filled"? role : `on${capitalize(role)}`],
             opacity: 0,
             transition: "opacity 300ms ease-in-out"
-        } : null,
+        } : undefined,
         "&:hover::after": button? {
             opacity: 0.2
-        } : null,
+        } : undefined,
         [`& .${rippleClass}`]: button? {
             backgroundColor: appearance === "text" || appearance === "outlined"? theme[`on${capitalize(role)}`] : theme[appearance === "filled"? role : `on${capitalize(role)}`]
-        } : null
+        } : undefined
     }
 }));
 
-export default function Icon({className, iconGroup = "material-icons", icon, role = "primary", button, appearance = "filled", onPress, __isInButton, ...props}) {
+export default function Icon({className, iconGroup = "material-icons", icon, role = "primary", button = false, appearance = "filled", __isInButton, ...props}) {
     const [rippleClass, rippleExpand, rippleFade] = useRippleEffect();
     const theme = useTheme();
     const {cx, classes} = useStyles({theme, iconGroup, role, button, appearance, isInButton: __isInButton, rippleClass});
@@ -68,7 +68,6 @@ export default function Icon({className, iconGroup = "material-icons", icon, rol
             className={cx(classes.icon, className)}
             onMouseDown={button? rippleExpand : undefined}
             onMouseUp={button? rippleFade : undefined}
-            onClick={button? onPress : undefined}
             {...props}
         >
             {icon}

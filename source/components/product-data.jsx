@@ -4,11 +4,10 @@ import {useCallback, useContext, useState} from 'react';
 import {Heading, Subheading, Subtitle, Title} from './common/typography';
 import Button from './common/button';
 import DropdownMenu from './common/dropdown-menu';
-import '../styles/components/metadata.scss';
 import Modal from './common/modal';
 import Icon from './common/iconography';
-import {GET_PRODUCT_CUTSHEET} from '../../api';
 import {MessageContext} from './common/message-handler';
+import {GET_PRODUCT_CUTSHEET} from '@/app/api';
 
 export default function ProductData({product, extension, drawing}) {
     const {triggerInfoMessage, triggerErrorMessage} = useContext(MessageContext);
@@ -65,8 +64,8 @@ export default function ProductData({product, extension, drawing}) {
                 </div>
                 <p className='description'>{product.description}</p>
                 <div className='buttons'>
-                    <Button role="primary" style="filled" onPress={() => setOpen(true)}>Product Details</Button>
-                    <Icon appearance="text" button icon="picture_as_pdf" onPress={() => openPDF()} />
+                    <Button role="primary" style="filled" onClick={() => setOpen(true)}>Product Details</Button>
+                    <Icon appearance="text" button icon="picture_as_pdf" onClick={() => openPDF()} />
                 </div>
             </div>
             {variation.finishes.length > 1?

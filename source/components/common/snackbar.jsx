@@ -76,7 +76,7 @@ export default function Snackbar({role = "primary", open, setOpen, message, acti
         createPortal(
             <div className={cx(classes.snackbar, classes[state]?? "")}>
                 <span>{message}</span>
-                <Icon role={role} appearance="text" button onPress={() => action.callback()} icon={action.icon} />
+                <Icon role={role} appearance="text" button onClick={() => action.callback()} icon={action.icon} />
             </div>,
             document.getElementsByClassName("root")[0]
         )

@@ -55,24 +55,24 @@ function Pagination({count, activeSlide, changeSlide}) {
 
         if(count <= buttonCount) {
             for(let i = 0; i < count; i++)
-                pageButtons.push(<PageButton key={i} role="primary" appearance={activeSlide === i? "filled" : "outlined"} onPress={() => changeSlide(i)} number={i + 1} />);
+                pageButtons.push(<PageButton key={i} role="primary" appearance={activeSlide === i? "filled" : "outlined"} onClick={() => changeSlide(i)} number={i + 1} />);
         } else if(activeSlide < buttonCount / 2) {
             for(let i = 0; i < buttonCount; i++)
-                pageButtons.push(<PageButton key={i} role="primary" appearance={activeSlide === i? "filled" : "outlined"} onPress={() => changeSlide(i)} number={i + 1} />);
+                pageButtons.push(<PageButton key={i} role="primary" appearance={activeSlide === i? "filled" : "outlined"} onClick={() => changeSlide(i)} number={i + 1} />);
             pageButtons.push(<PaginationGap key="gap_right" />);
-            pageButtons.push(<PageButton key={count - 1} role="primary" appearance={activeSlide === count - 1? "filled" : "outlined"} onPress={() => changeSlide(count - 1)} number={count} />);
+            pageButtons.push(<PageButton key={count - 1} role="primary" appearance={activeSlide === count - 1? "filled" : "outlined"} onClick={() => changeSlide(count - 1)} number={count} />);
         } else if(activeSlide > count - buttonCount / 2 - 1) {
-            pageButtons.push(<PageButton key={0} role="primary" appearance={activeSlide === 0? "filled" : "outlined"} onPress={() => changeSlide(0)} number="1" />);
+            pageButtons.push(<PageButton key={0} role="primary" appearance={activeSlide === 0? "filled" : "outlined"} onClick={() => changeSlide(0)} number="1" />);
             pageButtons.push(<PaginationGap key="gap_left" />);
             for(let i = count - buttonCount; i < count; i++)
-                pageButtons.push(<PageButton key={i} role="primary" appearance={activeSlide === i? "filled" : "outlined"} onPress={() => changeSlide(i)} number={i + 1} />);
+                pageButtons.push(<PageButton key={i} role="primary" appearance={activeSlide === i? "filled" : "outlined"} onClick={() => changeSlide(i)} number={i + 1} />);
         } else {
-            pageButtons.push(<PageButton key={0} role="primary" appearance={activeSlide === 0? "filled" : "outlined"} onPress={() => changeSlide(0)} number="1" />);
+            pageButtons.push(<PageButton key={0} role="primary" appearance={activeSlide === 0? "filled" : "outlined"} onClick={() => changeSlide(0)} number="1" />);
             pageButtons.push(<PaginationGap key="gap_left" />);
             for(let i = activeSlide - (buttonCount - 3) / 2; i < activeSlide + (buttonCount -3) / 2 + 1; i++)
-                pageButtons.push(<PageButton key={i} role="primary" appearance={activeSlide === i? "filled" : "outlined"} onPress={() => changeSlide(i)} number={i + 1} />);
+                pageButtons.push(<PageButton key={i} role="primary" appearance={activeSlide === i? "filled" : "outlined"} onClick={() => changeSlide(i)} number={i + 1} />);
             pageButtons.push(<PaginationGap key="gap_right" />);
-            pageButtons.push(<PageButton key={count - 1} role="primary" appearance={activeSlide === count - 1? "filled" : "outlined"} onPress={() => changeSlide(count - 1)} number={count} />);
+            pageButtons.push(<PageButton key={count - 1} role="primary" appearance={activeSlide === count - 1? "filled" : "outlined"} onClick={() => changeSlide(count - 1)} number={count} />);
         }
 
         return pageButtons;
@@ -82,11 +82,11 @@ function Pagination({count, activeSlide, changeSlide}) {
     const {classes} = paginationStyles();
     return (
         <div className={classes.pagination}>
-            <Icon className="left" role="primary" appearance="tonal" button icon="navigate_before" onPress={() => changeSlide(activeSlide - 1)} />
+            <Icon className="left" role="primary" appearance="tonal" button icon="navigate_before" onClick={() => changeSlide(activeSlide - 1)} />
             <div className='button-list'>
                 {generatePageButtons(count)}
             </div>
-            <Icon className="left" role="primary" appearance="tonal" button icon="navigate_next" onPress={() => changeSlide(activeSlide + 1)} />
+            <Icon className="left" role="primary" appearance="tonal" button icon="navigate_next" onClick={() => changeSlide(activeSlide + 1)} />
         </div>
     );
 }

@@ -194,19 +194,17 @@ export default function Header() {
                         <Link className={pathname === '/catalog'? "active" : ""} href="/catalog">Catalog</Link>
                         <Link className={pathname === '/salvage'? "active" : ""} href="/salvage">Salvage</Link>
                         <Link className={pathname === '/gallery'? "active" : ""} href="/gallery">Gallery</Link>
-                        {/* <Icon className="cart" role="primary" style="text" icon='shopping_cart' /> */}
                     </div>
-                    <Icon className="dark-mode" role="secondary" appearance="outlined" button icon={darkMode? "dark_mode" : "light_mode"} onPress={toggleDarkMode} />
-                    <Icon className="sidebar-button" role="primary" appearance="text" button icon="menu_open" onPress={() => setOpen(true)} />
+                    <Icon className="dark-mode" role="secondary" appearance="outlined" button icon={darkMode? "dark_mode" : "light_mode"} onClick={toggleDarkMode} />
+                    <Icon className="sidebar-button" role="primary" appearance="text" button icon="menu_open" onClick={() => setOpen(true)} />
                 </div>
             </div>
             <div className={classes.sidebar}>
                 <div className="scrim" onMouseDown={() => setOpen(false)} />
                 <div className="navigation">
                     <div className="buttons">
-                        {/* <Icon className="cart" role="primary" style="text" icon='shopping_cart' /> */}
-                        <Icon className="dark-mode" role="secondary" appearance="outlined" button icon={darkMode? "dark_mode" : "light_mode"} onPress={toggleDarkMode} />
-                        <Icon button icon="close" onPress={() => setOpen(false)} />
+                        <Icon className="dark-mode" role="secondary" appearance="outlined" button icon={darkMode? "dark_mode" : "light_mode"} onClick={toggleDarkMode} />
+                        <Icon button icon="close" onClick={() => setOpen(false)} />
                     </div>
                     <div className='links'>
                         <Link className={pathname === '/catalog'? "active" : ""} href="/catalog">Catalog</Link>

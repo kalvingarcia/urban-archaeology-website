@@ -48,12 +48,12 @@ const useStyles = tss.create(({theme, role, appearance, rippleClass}) => ({
     }
 }));
 
-export default function Button({className, role = "primary", appearance = "filled", icon, onPress, children}) {
+export default function Button({className, role = "primary", appearance = "filled", icon, onClick, children}) {
     const [rippleClass, rippleExpand, rippleFade] = useRippleEffect();
     const theme = useTheme();
     const {cx, classes} = useStyles({theme, role, appearance, rippleClass});
     return (
-        <button className={cx(classes.button, className)} onMouseDown={rippleExpand} onMouseUp={rippleFade} onClick={onPress}>
+        <button className={cx(classes.button, className)} onMouseDown={rippleExpand} onMouseUp={rippleFade} onClick={onClick}>
             {icon && cloneElement(icon, {className: "buttonIcon", __isInButton: true})}
             {children}
         </button>

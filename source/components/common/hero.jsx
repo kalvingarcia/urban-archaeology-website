@@ -85,7 +85,7 @@ export default function Hero({src, children}) {
                 {children}
             </div>
             <div className={classes.visibility}>
-                <Icon role="secondary" appearance="outlined" button icon={hide? "visibility" : "visibility_off"} onPress={() => setHide(!hide)}/>
+                <Icon role="secondary" appearance="outlined" button icon={hide? "visibility" : "visibility_off"} onClick={() => setHide(!hide)}/>
             </div>
         </section>
     );
