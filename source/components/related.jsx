@@ -1,5 +1,4 @@
 import {Heading} from "./common/typography";
-import '../styles/components/related.scss';
 
 export default function Related({alone = false, children}) {
     return (

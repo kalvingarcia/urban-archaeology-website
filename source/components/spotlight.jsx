@@ -1,6 +1,5 @@
 "use client"
 import {useState, useEffect, cloneElement, useCallback, Children} from "react";
-import '../styles/components/spotlight.scss';
 
 function Stage({lead = false, mini = false, onClick, children}) {
     const handleClick = useCallback(() => {

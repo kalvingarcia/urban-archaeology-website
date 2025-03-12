@@ -2,7 +2,6 @@
 import {useRouter} from 'next/navigation';
 import {Heading} from './common/typography';
 import useRippleEffect from '../hooks/ripple';
-import '../styles/components/variations.scss';
 
 export function Variation({from, active, id, extension, name, subname, price}) {
     const router = useRouter();
