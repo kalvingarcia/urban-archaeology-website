@@ -1,26 +1,32 @@
 # Urban Archaeology Website
-This project was created as a proof-of-concept for a replacement of
-Urban Archaeology's website. I was hired to completely redo and modernize
-the website. Since this was my first professional project, I decided
-to take the process extremely seriously and use the skills I learned
-in my undergraduate experience by creating a software design document 
-to be approved by Urban Archaeology. I, then,  wireframed and mocked
-up the website using Figma. Finally, I did research on the best practices
-for creating a store-front website, especially one where I wanted filterable
-and searchable products.
+This project was the Urban Archaeology Website, a minimum viable
+product designed as a proof-of-concept to showcase the proposed redesign and
+enhanced functionality for the company's online presence. The goal of this
+project was to modernize the website’s design, improve user experience,
+and introduce new features aligned with contemporary web development standards.
+
+Development on this project was discontinued after it was communicated that
+the redesign was outside the scope of my responsibilities. At the company’s
+request, my focus was redirected to maintaining the existing website rather
+than implementing this new version.
+
+While incomplete, this MVP serves as a reference for potential future development
+should the company choose to revisit the redesign. The project demonstrates core
+UI/UX principles, scalable architecture, and modern web development practices.
 
 ## The Concept
-The website itself needed to be a good successor to the old website,
-which had a grid layout using tables to showcase the products. There
-was no filterability, which meant that products that could fit in
-multiple categories are listed in each place they can be. While I found
-this implementation to be inefficient, this is what had been working for
-them.
-
 Before I could get started on designing the new website, I needed to
 understand the old one, since that was what their user base had gotten
 used to, and I needed to continue maintaining the old website while
 I created the new one, as the sole web developer working with Urban.
+
+Originally, I felt the website itself needed to be a great successor, As 
+this was my first professional project, I took the process extremely
+seriously. Drawing from my undergraduate experience, I began by creating
+a software design document to be approved by Urban Archaeology. I, then,
+wireframed and mocked up the website using Figma and conducted research on
+best practices for developing an effective storefront website, particularly
+focusing on filterable and searchable product displays.
 
 Finally, I was able to create the wireframe for the project:
 ![Wireframes for the Urban Archaeology website.](/assets/urbarch-website/wireframes.jpg)
