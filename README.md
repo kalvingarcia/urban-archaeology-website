@@ -29,7 +29,7 @@ best practices for developing an effective storefront website, particularly
 focusing on filterable and searchable product displays.
 
 Finally, I was able to create the wireframe for the project:
-![Wireframes for the Urban Archaeology website.](/assets/urbarch-website/wireframes.jpg)
+![Wireframes for the Urban Archaeology website.](/docs/readme/wireframes.jpg)
 
 ## The Design
 I decided to continue using the website's current color palette and
@@ -42,13 +42,13 @@ The main redesign came in the catalog page, which I demonstrated
 for Urban Archaeology to help visualize how the website would function.
 
 Old:
-![Catalog old.](/assets/urbarch-website/catalog_old.jpg)
+![Catalog old.](/docs/readme/catalog_old.jpg)
 
 Concept:
-![Catalog concept.](/assets/urbarch-website/catalog_concept.jpg)
+![Catalog concept.](/docs/readme/catalog_concept.jpg)
 
 Implementation:
-![Catalog implementation.](/assets/urbarch-website/catalog.jpg)
+![Catalog implementation.](/docs/readme/catalog.jpg)
 
 Another key component in the redesign was the product page, which featured all the
 information being presented to the user in the form of text, with little interactive
@@ -59,13 +59,13 @@ giving them less information to digest. I also opted to show related items under
 the product, rather than in a separate tab.
 
 Old:
-![Product page old.](/assets/urbarch-website/product_old.jpg)
+![Product page old.](/docs/readme/product_old.jpg)
 
 Concept:
-![Product page concept.](/assets/urbarch-website/product_concept.jpg)
+![Product page concept.](/docs/readme/product_concept.jpg)
 
 Implementation:
-![Product page implementation.](/assets/urbarch-website/product.jpg)
+![Product page implementation.](/docs/readme/product.jpg)
 
 The old website also didn't have a mobile version. This meant that users
 opening the website on their phones didn't have the ability to use the
@@ -73,7 +73,7 @@ website easily. Instead needing to navigate the website using the desktop
 version. To make the website more accessible, I focused some effort in
 adding some responsive elements to the website.
 
-![Mobile implementation](/assets/urbarch-website/mobile.jpg)
+![Mobile implementation](/docs/readme/mobile.jpg)
 
 ### The Stack
 
@@ -96,7 +96,7 @@ was be made with a few features I had in mind built in, like URL search queries.
 
 #### CockroachDB
 
-This is only my second time using this tech, but the free (scaling tier meant that I
+This is only my second time using this tech, but the free scaling tier meant that I
 could develop the project without breaking bank for myself or the company. It also means
 that since the company's website isn't very high traffic, the database can stay on the
 cluster for now, saving some money. The added benefit being that the cluster is hosted
