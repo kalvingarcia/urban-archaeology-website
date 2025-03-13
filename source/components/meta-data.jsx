@@ -9,30 +9,29 @@ import Icon from './common/iconography';
 import {MessageContext} from './common/message-handler';
 import {GET_PRODUCT_CUTSHEET} from '@/app/api';
 
-export default function ProductData({product, extension, drawing}) {
-    const {triggerInfoMessage, triggerErrorMessage} = useContext(MessageContext);
-
-    const variation = product.variations.find(variation => variation.extension === extension);
-    
+export default function MetaData({data, current, drawing}) {
+    const variation = data.variations.find(variation => variation.extension === current);
     const minOption = variation.finishes.reduce((min, {display, value}) => min.value < value? min : {display, value}, Infinity);
     const [price, updatePrice] = useState(minOption.value);
-
-    const openPDF = useCallback(() => {
+    
+    const {triggerInfoMessage, triggerErrorMessage} = useContext(MessageContext);
+    const openPDF = () => {
         triggerInfoMessage("Generating PDF!");
         (async () => {
             const uri = await fetch(
-                `${GET_PRODUCT_CUTSHEET}?id=${product.id}&extension=${variation.extension}`,
+                `${GET_PRODUCT_CUTSHEET}?id=${data.id}&extension=${variation.extension}`,
                 {cache: 'no-store'}
             ).then(response => {
                 if(!response.ok)
                     throw new Error("Couldn't generate PDF.");
                 return response.text()
             }).catch(error => triggerErrorMessage(error.message));
+
             if(uri) {
                 var download = document.createElement('a');
                 download.setAttribute('href', uri);
                 download.setAttribute('download', 
-                    `${product.name}${variation.subname !== ""? ` [${variation.subname}]` : ""} Cutsheet - ${(new Date()).toLocaleDateString(
+                    `${data.name}${variation.subname !== ""? ` [${variation.subname}]` : ""} Cutsheet - ${(new Date()).toLocaleDateString(
                         undefined, {year: 'numeric', month: 'short', day: 'numeric'})}.pdf`
                 );
                 download.style.display = 'none';
@@ -43,17 +42,17 @@ export default function ProductData({product, extension, drawing}) {
                 triggerInfoMessage("PDF download initiated!")
             }
         })();
-    }, []);
+    };
 
     const [open, setOpen] = useState(false);
     return (
         <div className='metadata'>
             <div className='general'>
                 <div className='title'>
-                    <Title>{product.name}</Title>
+                    <Title>{data.name}</Title>
                     {variation.subname !== ""? <Subtitle>{variation.subname}</Subtitle> : ""}
                 </div>
-                <span className='id'>{product.id}{extension !== "NONE"? "-" + extension : ""}</span>
+                <span className='id'>{data.id}{current !== "NONE"? "-" + current : ""}</span>
                 <div className='price'>
                     <span className='current'>{price.toString() === "Infinity"? "Call for pricing" : `$${price.toLocaleString('en', {useGrouping: true})}.00`}</span>
                     {price !== minOption.value?
@@ -62,7 +61,7 @@ export default function ProductData({product, extension, drawing}) {
                         ""
                     }
                 </div>
-                <p className='description'>{product.description}</p>
+                <p className='description'>{data.description}</p>
                 <div className='buttons'>
                     <Button role="primary" style="filled" onClick={() => setOpen(true)}>Product Details</Button>
                     <Icon appearance="text" button icon="picture_as_pdf" onClick={() => openPDF()} />
