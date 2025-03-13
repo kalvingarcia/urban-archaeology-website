@@ -12,7 +12,7 @@ const fadeEffect = keyframes`
         opacity: 0;
     }
 `
-console.log(tss);
+
 const useStyles = tss.create({
     ripple: {
         position: "fixed",

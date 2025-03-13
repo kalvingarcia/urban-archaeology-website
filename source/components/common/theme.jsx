@@ -199,10 +199,8 @@ export default function Theme({defaultDarkMode, setDarkModeCookie, children}) {
             <DarkModeContext.Provider value={[darkMode, toggleDarkMode]}>
                 <ThemeContext.Provider value={theme}>
                     <GlobalStyles styles={styles} />
-                    <div className={darkMode? 'theme--dark' : 'theme--light'}>
-                        <div id="theme-root">
-                            {children}
-                        </div>
+                    <div id="theme-root">
+                        {children}
                     </div>
                 </ThemeContext.Provider>
             </DarkModeContext.Provider>
