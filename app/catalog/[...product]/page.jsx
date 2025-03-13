@@ -1,8 +1,5 @@
 import {notFound, redirect} from 'next/navigation';
-import Image from 'next/image';
-import Spotlight from '@/source/components/spotlight';
-import ProductData from '@/source/components/product-data';
-import Variations, {Variation} from '@/source/components/variations';
+import ProducInfo from '@/source/components/product-info';
 import Related from '@/source/components/related';
 import Customs from '@/source/components/customs';
 import Card from '@/source/components/card';
@@ -65,36 +62,9 @@ export default async function Product({params}) {
         throw new Error("An error occured while attempting to get the product data.");
     const related = await fetch(`${GET_RELATED_PRODUCTS}?id=${id}&extension=${extension}`, {cache: 'no-store'}).then(response => response.json());
     return (
-        <main className='product'>
-            <section className='info'>
-                <Spotlight>
-                    {images.map(image => (
-                        <Image key={image.name} src={image.src} alt={image.alt} />
-                    ))}
-                </Spotlight>
-                <div className='data'>
-                    <ProductData product={product} extension={extension} drawing={drawing} />
-                    {product.variations.length !== 1?
-                        <Variations>
-                            {product.variations.map(variation => (
-                                <Variation
-                                    key={variation.extension}
-                                    from="products"
-                                    active={extension === variation.extension}
-                                    id={product.id}
-                                    extension={variation.extension}
-                                    name={product.name}
-                                    subname={variation.subname}
-                                    price={variation.finishes.reduce((min, {value}) => min < value? min : value, Infinity)}
-                                />
-                            ))}
-                        </Variations>
-                        :
-                        ""
-                    }
-                </div>
-            </section>
-            {related.length > 0?
+        <main>
+            <ProducInfo images={images} drawing={drawing} data={product} currentVariation={extension} />
+            {related.length > 0 &&
                 <Related>
                     {related.map(product => (
                         <Card 
@@ -109,8 +79,6 @@ export default async function Product({params}) {
                         />
                     ))}
                 </Related>
-                :
-                ""
             }
             <Customs />
         </main>
