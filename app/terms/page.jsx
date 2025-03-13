@@ -1,14 +1,36 @@
-import Banner from "../assets/components/common/banner";
-import {Display, Heading, Subheading} from "../assets/components/common/typography";
-import '../assets/styles/pages/terms.scss'
+"use client"
+import {tss} from "tss-react";
+import {useTheme} from "@/source/components/common/theme";
+import Banner from "@/source/components/common/banner";
+import {Display, Heading, Subheading} from "@/source/components/common/typography";
+
+const useStyles = tss.create(({theme}) => ({
+    info: {
+        padding: "20px",
+        maxWidth: "1280px",
+        margin: "auto",
+
+        "& h3": {
+            padding: "20px"
+        },
+        "& h4": {
+            padding: "10px 20px"
+        },
+        "& p": {
+            padding: "5px 20px"
+        }
+    }
+}));
 
 export default function Terms() {
+    const theme = useTheme();
+    const {classes} = useStyles({theme});
     return (
-        <main className="terms">
+        <main>
             <Banner src="terms.jpg">
                 <Display size="medium">Terms and Conditions</Display>
             </Banner>
-            <div className="info">
+            <div className={classes.info}>
                 <Heading>Orders and Billing</Heading>
                 <p>
                     Orders may be placed by mail, phone, fax, or by sending us an email. If you do not see what you are looking for on this website,
