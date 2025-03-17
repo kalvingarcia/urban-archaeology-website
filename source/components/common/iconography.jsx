@@ -38,6 +38,7 @@ const useStyles = tss.create(({theme, iconGroup, role, button, appearance, isInB
         maxWidth: isInButton? "fit-content" : "48px",
         maxHeight: isInButton? "fit-content" : "48px",
         padding: button? "10px" : 0,
+        cursor: button? "pointer" : "default",
 
         backgroundColor: !button || appearance === "outlined" || appearance === "text"? "transparent" : theme[appearance === "filled"?  `on${capitalize(role)}` : role],
         "&::after": button? {

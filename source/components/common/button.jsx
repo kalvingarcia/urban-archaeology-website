@@ -23,6 +23,7 @@ const useStyles = tss.create(({theme, role, appearance, rippleClass}) => ({
         maxWidth: "fit-content",
         maxHeight: "fit-content",
         padding: "10px 20px",
+        cursor: "pointer",
 
         backgroundColor: appearance === "outlined" || appearance === "text"? "transparent" : theme[appearance === "filled"?  `on${capitalize(role)}` : role],
         "&::after": {

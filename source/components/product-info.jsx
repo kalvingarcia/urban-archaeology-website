@@ -24,20 +24,7 @@ const variationStyles = tss.create(({theme, active, rippleClass}) => ({
         color: active? theme.onSecondary : theme.body,
         border: active? `1pt solid ${theme.onSecondary + "7F"}}` : "none",
         pointerEvents: active? "none" : "auto",
-
-        // "&::after": {
-        //     content: "''",
-        //     position: "absolute",
-        //     inset: 0,
-        //     width: "100%",
-        //     height: "100%",
-        //     opacity: 0,
-        //     transition: "opacity 300ms ease-in-out",
-        //     backgroundColor: theme.body
-        // },
-        // "&:hover::after": {
-        //     opacity: 0.2
-        // },
+        cursor: "pointer",
 
         "& .id": {
             fontSize: "0.8rem"

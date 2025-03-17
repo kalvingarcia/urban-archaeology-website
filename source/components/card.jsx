@@ -30,6 +30,7 @@ const useStyles = tss.create(({theme, type, rippleClass}) => ({
         borderRadius: "20px",
         backgroundColor: theme.primary,
         color: theme.onPrimary,
+        cursor: "pointer",
 
         "&.skeleton": {
             backgroundImage: `linear-gradient(135deg, ${theme.surface}, ${theme.body}51)`,
