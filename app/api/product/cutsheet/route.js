@@ -1,7 +1,7 @@
 import Database from "../../database";
 import {PDFDocument, rgb, breakTextIntoLines} from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
-import pdfFonts from '../../../assets/fonts/pdf.json';
+import pdfFonts from '@/assets/fonts/pdf.json';
 
 let BASE_URL;
 if(process.env.NODE_ENV === "development")
@@ -23,8 +23,8 @@ export async function GET(request) {
         pdf.registerFontkit(fontkit);
         const body = await pdf.embedFont(pdfFonts.universLight);
         const emphasis = await pdf.embedFont(pdfFonts.universRoman);
-        const heading = await pdf.embedFont(pdfFonts.universBold);
         const title = await pdf.embedFont(pdfFonts.universBlack);
+        const heading = await pdf.embedFont(pdfFonts.universBold);
 
         const titleColor = rgb(0.066, 0.227, 0.329);
         const subtitleColor = rgb(0.671, 0.561, 0.361);
@@ -94,7 +94,7 @@ export async function GET(request) {
 
         const columnWidth = 1050;
 
-        let image = (await import(`../../../assets/images/products/${id}/${extension}/card.jpg`)).default;
+        let image = (await import(`@/assets/images/products/${id}/${extension}/card.jpg`)).default;
         if(image) {
             const thumbnail = await fetch(`${BASE_URL}${image.src}`).then(async response => pdf.embedJpg(await response.arrayBuffer()));
             const thumbnailDimensions = thumbnail.scale(1);
@@ -103,7 +103,7 @@ export async function GET(request) {
                 width: columnWidth, height: (columnWidth / thumbnailDimensions.width) * thumbnailDimensions.height
             });
         }
-        image = (await import(`../../../assets/images/products/${id}/${extension}/drawing.jpg`).catch(() => undefined))?.default;
+        image = (await import(`@/assets/images/products/${id}/${extension}/drawing.jpg`).catch(() => undefined))?.default;
         if(image) {
             const drawing  = await fetch(`${BASE_URL}${image.src}`).then(async response => pdf.embedJpg(await response.arrayBuffer()));
             const drawingDimensions = drawing.scale(1);
@@ -115,7 +115,7 @@ export async function GET(request) {
 
         page.drawText(productData.name, {font: title, size: 60, x: 1350, y: 2740, color: titleColor});
         let longTitle = false;
-        if(productData.subname !== "NONE") {
+        if(productData.subname !== "") {
             longTitle = title.widthOfTextAtSize(productData.name, 60) + title.widthOfTextAtSize(productData.subname, 60) + 20 > 1350;
             page.drawText(productData.subname, {
                 font: title, size: 60,
@@ -174,101 +174,87 @@ export async function GET(request) {
                 }
                 yPos -= bodyGap;
             }
+
             yPos -= sectionGap;
         }
 
-        if(productData.overview.bulb?.quantity > 0) {
+        if(productData.overview.length !== 0) {
             yPos -= subtitleSize;
-            page.drawText("Bulb Info", {font: title, size: subtitleSize, x: xPos, y: yPos, maxWidth: columnWidth, color: subtitleColor});
+            page.drawText(
+                "Overview", {font: title, size: subtitleSize, x: xPos, y: yPos, color: subtitleColor}
+            );
             yPos -= subtitleGap;
-            const bulbInfo = `${productData.overview.bulb.shape.name} Bulb (${productData.overview.bulb.shape.code}) ${productData.overview.bulb.socket.name} Base (${productData.overview.bulb.socket.code})`;
-            for(const line of [...breakTextIntoLines(bulbInfo, [' '], columnWidth, (word) => body.widthOfTextAtSize(word, bodySize)), ...breakTextIntoLines(`${productData.overview.bulb.specifications} recommended.`, [' '], columnWidth, (word) => body.widthOfTextAtSize(word, bodySize)), `(${productData.overview.bulb.quantity} count)`]) {
-                yPos -= bodySize;
-                page.drawText(line, {
-                    size: bodySize,
-                    x: xPos, y: yPos,
-                    maxWidth: columnWidth
+
+            if(productData.overview.bulbs?.length > 0) {
+                yPos -= headingSize;
+                page.drawText("Bulb Options", {font: title, size: headingSize, x: xPos, y: yPos, maxWidth: columnWidth, color: headingColor});
+                yPos -= headingGap;
+                
+                productData.overview.bulbs.map(bulb => {
+                    const bulbInfo = bulb.info;
+                    for(const line of breakTextIntoLines(bulbInfo, [' '], columnWidth, (word) => body.widthOfTextAtSize(word, bodySize))) {
+                        yPos -= bodySize;
+                        page.drawText(line, {
+                            size: bodySize,
+                            x: xPos, y: yPos,
+                            maxWidth: columnWidth
+                        });
+                        yPos -= bodyGap;
+                    }
                 });
-                yPos -= bodyGap;
+
+                yPos -= sectionGap;
             }
-            yPos -= sectionGap;
-        }
 
-        if(productData.overview.ul?.length > 0 && productData.overview.ul[0] !== "None") {
-            yPos -= subtitleSize;
-            page.drawText("UL Listing", {font: title, size: subtitleSize, x: xPos, y: yPos, maxWidth: columnWidth, color: subtitleColor});
-            yPos -= subtitleGap;
-            yPos -= bodySize;
-            page.drawText(`This product is listed for use in ${productData.overview.ul[0].toUpperCase()} environments.`, {size: bodySize, x: xPos, y: yPos});
-            yPos -= bodyGap;
-            yPos -= sectionGap;
-        }
-
-        if(productData.replacements?.length > 0) {
-            yPos -= subtitleSize;
-            page.drawText("Replacements", {font: title, size: subtitleSize, x: xPos, y: yPos, maxWidth: columnWidth, color: subtitleColor});
-            yPos -= subtitleGap;
-
-            let column0MaxWidth = 0, column1MaxWidth = 0;
-            productData.replacements.forEach(replacement => {
-                let check = 0;
-
-                check = body.widthOfTextAtSize(`$${replacement.price}`, bodySize);
-                column0MaxWidth = check > column0MaxWidth? check : column0MaxWidth;
-
-                check = body.widthOfTextAtSize(`${replacement.name}${replacement.subname !== "NONE"? ` [${replacement.subname}]` : ""}`, bodySize);
-                column1MaxWidth = check > column1MaxWidth? check : column1MaxWidth;
-            })
-            for(const replacement of productData.replacements) {
+            if(productData.overview.ul) {
+                yPos -= headingSize;
+                page.drawText("UL Listing", {font: title, size: headingSize, x: xPos, y: yPos, maxWidth: columnWidth, color: headingColor});
+                yPos -= headingGap;
                 yPos -= bodySize;
-                page.drawText(`$${replacement.price}`, {size: bodySize, x: xPos, y: yPos});
-                page.drawText(`${replacement.name}${replacement.subname !== "NONE"? ` [${replacement.subname}]` : ""}`, {
-                    size: bodySize, x: xPos + column0MaxWidth + tabSize, y: yPos
-                });
-                page.drawText(`${replacement.id}${replacement.extension !== "NONE"? `-${replacement.extension}` : ""}`, {
-                    size: bodySize, x: xPos + column0MaxWidth + column1MaxWidth + tabSize * 2, y: yPos
-                });
+                page.drawText(`This product is listed for use in ${productData.overview.ul.toUpperCase()} environments.`, {size: bodySize, x: xPos, y: yPos});
                 yPos -= bodyGap;
 
-                const optionsSize = bodySize * 0.8;
-                const optionsGap = bodyGap * 0.8;
-                if(replacement.overview.finishes.length > 0) {
-                    const finishPrices = {};
-                    for(const {finish, difference} of replacement.overview.finishes) {
-                        if(!finishPrices[difference])
-                            finishPrices[difference] = [];
-                        finishPrices[difference].push(finishes[finish]);
-                    }
+                yPos -= sectionGap;
+            }
 
-                    yPos -= optionsSize;
-                    page.drawText("Finishes", {font: emphasis, size: optionsSize, x: xPos + tabSize, y: yPos});
-                    yPos -= optionsGap;
+            if(productData.overview.specifications) {
+                yPos -= headingSize;
+                page.drawText("Specifications", {font: title, size: headingSize, x: xPos, y: yPos, color: headingColor});
+                yPos -= headingGap;
 
-                    let priceGroup = 1;
-                    const maxWidth = Math.max(...Object.keys(finishPrices).map(difference => body.widthOfTextAtSize(`${Math.sign(difference) === -1? "-" : "+"}$${Math.abs(difference)}`, optionsSize)));
-                    for(const difference of Object.keys(finishPrices)) {
-                        yPos -= optionsSize;
-                        page.drawText(`${Math.sign(difference) === -1? "-" : "+"}$${Math.abs(difference)}`, {size: optionsSize, x: xPos + tabSize * 2, y: yPos});
-                        page.drawText(`Price Group ${priceGroup++}`, {size: optionsSize, x: xPos + tabSize * 3 + maxWidth, y: yPos});
-                        yPos -= optionsGap;
-                    }
-                    yPos -= optionsGap;
+                const specifications = Object.entries(productData.overview.specifications);
+                const widthIndex = specifications.findIndex(([key]) => key === "width")
+                if(widthIndex !== -1) specifications.splice(0, 0, specifications.splice(widthIndex, 1)[0]);
+
+                const maxWidth = Math.max(...specifications.map(([key]) => {
+                    return emphasis.widthOfTextAtSize(key.charAt(0).toUpperCase() + key.slice(1), bodySize)
+                }));
+                for(const [key, {measurement, unit}] of specifications) {
+                    page.drawText(key.charAt(0).toUpperCase() + key.slice(1), {
+                        font: emphasis, size: bodySize, x: xPos, y: yPos - bodySize
+                    });
+                    
+                    yPos -= bodySize;
+                    page.drawText(`${measurement} ${unit}`, {
+                        size: bodySize, x: xPos + maxWidth + tabSize, y: yPos, maxWidth: columnWidth - (maxWidth + tabSize)
+                    });
+                    yPos -= bodyGap;
                 }
+                yPos -= sectionGap;
             }
-            yPos -= sectionGap;
-        }
 
-        if(productData.overview.notes && productData.overview.notes !== "") {
-            yPos -= subtitleSize;
-            page.drawText("Notes", {font: title, size: subtitleSize, x: xPos, y: yPos, maxWidth: columnWidth, color: subtitleColor});
-            yPos -= subtitleGap;
-            
-            for(const line of breakTextIntoLines(productData.overview.notes, [' '], columnWidth, word => body.widthOfTextAtSize(word, bodySize))) {
-                yPos -= bodySize;
-                page.drawText(line, {size: bodySize, x: xPos, y: yPos});
-                yPos -= bodyGap;
+            if(productData.overview.notes?? "" !== "") {
+                yPos -= headingSize;
+                page.drawText("Notes", {font: title, size: headingSize, x: xPos, y: yPos, maxWidth: columnWidth, color: headingColor});
+                yPos -= headingGap;
+                
+                for(const line of breakTextIntoLines(productData.overview.notes, [' '], columnWidth, word => body.widthOfTextAtSize(word, bodySize))) {
+                    yPos -= bodySize;
+                    page.drawText(line, {size: bodySize, x: xPos, y: yPos});
+                    yPos -= bodyGap;
+                }
+                yPos -= sectionGap;
             }
-            yPos -= sectionGap;
         }
 
         return new Response(await pdf.saveAsBase64({dataUri: true}), {
