@@ -15,6 +15,9 @@ const useStyles = tss.create(({theme, hide}) => ({
 
         "& *": {
             transition: "opacity 300ms ease-in-out"
+        },
+        "& a": {
+            textDecoration: "none"
         }
     },
     parallaxContainer: {
