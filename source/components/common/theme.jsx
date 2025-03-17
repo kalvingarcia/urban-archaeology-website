@@ -1,6 +1,6 @@
 'use client'
 import {useState, createContext, useContext, useEffect} from 'react';
-import {GlobalStyles, tss} from 'tss-react';
+import {GlobalStyles} from 'tss-react';
 import {NextAppDirEmotionCacheProvider} from 'tss-react/next/appDir';
 
 export const DarkModeContext = createContext();
