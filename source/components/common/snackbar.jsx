@@ -78,7 +78,7 @@ export default function Snackbar({role = "primary", open, setOpen, message, acti
                 <span>{message}</span>
                 <Icon role={role} appearance="text" button onClick={() => action.callback()} icon={action.icon} />
             </div>,
-            document.getElementsByClassName("root")[0]
+            document.getElementById("theme-root")
         )
     );
 }

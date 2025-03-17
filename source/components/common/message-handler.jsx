@@ -1,7 +1,6 @@
 'use client'
 import {Children, createContext, useCallback, useState} from "react";
 import Snackbar from './snackbar';
-import Modal from "./modal";
 
 export const MessageContext = createContext();
 
