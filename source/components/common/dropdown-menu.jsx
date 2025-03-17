@@ -33,6 +33,7 @@ function Option({display, value, onClick}) {
 const menuStyles = tss.create(({theme, height, flip}) => ({
     menu: {
         width: "100%",
+        maxWidth: "400px",
         position: "relative",
     },
     display: {
@@ -81,7 +82,7 @@ const menuStyles = tss.create(({theme, height, flip}) => ({
         width: "100%",
         height: `${height}px`,
         position: "absolute",
-        bottom: flip? "52px" : null,
+        bottom: flip? "45px" : null,
         overflow: "auto",
         borderRadius: "16px",
         border: `1pt solid ${theme.body + "7F"}`,
@@ -96,6 +97,7 @@ export default function DropdownMenu({className, label, options, defaultOption, 
     const [display, setDisplay] = useState(defaultOption?.display?? "Select...");
     const handleSelect = option => {
         setDisplay(option.display);
+        setHeight(0);
         setOpen(false);
         onChange?.(option.value);
     }
@@ -121,9 +123,10 @@ export default function DropdownMenu({className, label, options, defaultOption, 
     const [dropdown, setDropdown] = useState();
     const handleBlur = event => {
         if(event.target.value !== display) setDisplay(new String(display));
-        if(event.relatedTarget !== dropdown)
+        if(event.relatedTarget !== dropdown) {
             setHeight(0);
             setOpen(false);
+        }
     }
 
     const theme = useTheme();
